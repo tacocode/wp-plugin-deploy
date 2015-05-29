@@ -3,6 +3,16 @@
 # A modification of Dean Clatworthy's deploy script as found here: https://github.com/deanc/wordpress-plugin-git-svn
 # The difference is that this script lives in the plugin's git repo & doesn't require an existing SVN repo.
 
+# Check if a cli command is available (0 = true | 1 = false)
+function command_is_not_available() {
+    if ! type "$1" > /dev/null;
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # main config
 PLUGINSLUG="your-plugin-slug"
 CURRENTDIR=`pwd`
