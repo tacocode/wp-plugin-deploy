@@ -60,14 +60,30 @@ fi
 cd "$GITPATH"
 echo -e "Enter a commit message for this new version: \c"
 read COMMITMSG
-git commit -am "$COMMITMSG"
 
-echo "Tagging new version in git"
-git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
+read -p "Create Git commit & tag? " -n 1 -r
+echo # Move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+	then
 
-echo "Pushing latest commit to origin, with tags"
-git push origin master
-git push origin master --tags
+		if git show-ref --tags --quiet --verify -- "refs/tags/$NEWVERSION1"
+			then 
+				echo "Version $NEWVERSION1 already exists as git tag. Exiting...."; 
+				exit 1; 
+			else
+				echo "Git version does not exist. Let's proceed..."
+		fi
+
+	    git commit -am "$COMMITMSG"
+
+	    echo "Tagging new version in git"
+	    git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
+
+	    echo "Pushing latest commit to origin, with tags"
+	    git push origin master
+	    git push origin master --tags
+
+fi
 
 echo 
 echo "Creating local copy of SVN repo ..."
