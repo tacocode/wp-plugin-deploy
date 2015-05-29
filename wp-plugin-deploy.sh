@@ -47,16 +47,14 @@ echo "readme.txt version: $NEWVERSION1"
 NEWVERSION2=`grep "^Version:" "$GITPATH/$MAINFILE" | awk -F' ' '{print $NF}'`
 echo "$MAINFILE version: $NEWVERSION2"
 
-if [ "$NEWVERSION1" != "$NEWVERSION2" ]; then echo "Version in readme.txt & $MAINFILE don't match. Exiting...."; exit 1; fi
+if [ "$NEWVERSION1" != "$NEWVERSION2" ] && [ "$NEWVERSION1" != "trunk" ]; then echo "Version in readme.txt & $MAINFILE don't match. Exiting...."; exit 1; fi
 
-echo "Versions match in readme.txt and $MAINFILE. Let's proceed..."
-
-if git show-ref --tags --quiet --verify -- "refs/tags/$NEWVERSION1"
-	then 
-		echo "Version $NEWVERSION1 already exists as git tag. Exiting...."; 
-		exit 1; 
+if [ "$NEWVERSION1" == "trunk" ]
+	then
+		echo "Setting trunk version to $NEWVERSION2 ..."
+		NEWVERSION1=$NEWVERSION2;
 	else
-		echo "Git version does not exist. Let's proceed..."
+		echo "Versions match in readme.txt and $MAINFILE ..."
 fi
 
 cd "$GITPATH"
