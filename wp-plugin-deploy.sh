@@ -101,12 +101,15 @@ echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL $SVNPATH
 
+# Delete all files in SVN trunk
 echo "Clearing svn repo so we can overwrite it"
 svn rm $SVNPATH/trunk/*
 
+# Add all files from Git HEAD to SVN trunk
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
 
+# Ignore specific files in SVN trunk
 echo "Ignoring github specific files and deployment script"
 svn propset svn:ignore "wp-plugin-deploy.sh
 README.md
