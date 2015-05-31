@@ -85,11 +85,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 
 fi
 
-# Checkout SVN repo
-echo 
-echo "Creating local copy of SVN repo ..."
-svn co $SVNURL $SVNPATH
-
 # Check if the svn tag already exists
 echo "Checking if the svn tag already exists ..."
 set +e && svn info "$SVNURL/tags/$NEWVERSION1" >& /dev/null && set -e
@@ -100,6 +95,11 @@ if [ $? == 0 ]
 	else
 		echo "Version $NEWVERSION1 does not exist as svn tag. Proceeding....";
 fi
+
+# Checkout SVN repo
+echo 
+echo "Creating local copy of SVN repo ..."
+svn co $SVNURL $SVNPATH
 
 echo "Clearing svn repo so we can overwrite it"
 svn rm $SVNPATH/trunk/*
