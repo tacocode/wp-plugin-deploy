@@ -1,7 +1,9 @@
 #! /bin/bash
-# Source: https://github.com/thenbrent/multisite-user-management/blob/master/deploy.sh
-# A modification of Dean Clatworthy's deploy script as found here: https://github.com/deanc/wordpress-plugin-git-svn
-# The difference is that this script lives in the plugin's git repo & doesn't require an existing SVN repo.
+
+# Automated SVN deployment of your Git versioned WordPress plugin
+# https://github.com/thehelvetian/wp-plugin-deploy
+# License: MIT License
+# License URI: https://github.com/thehelvetian/wp-plugin-deploy/blob/master/LICENSE
 
 # Check if a cli command is available (0 = true | 1 = false)
 function command_is_not_available() {
